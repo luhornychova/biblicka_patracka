@@ -10,7 +10,7 @@
 - Cíl / Vize: Ukázat dětem Bibli jako jeden velký příběh směřující k Ježíši Kristu, ne jako soubor izolovaných příběhů. Spojit biblický obsah s dobrodružstvím, objevováním a hrou tak, aby to děti motivovalo pokračovat dál.
 - Cílová skupina: Děti cca 6–10 let, které už umí číst (samostatně nebo s pomocí dospělého). Veřejná, volně dostupná webová aplikace, počet uživatelů zatím neznámý. V budoucnu (mimo rozsah v1) je plánovaná i placená verze — PDF materiály k tisku pro nedělní besídky.
 - Brand tón: Přátelský, dobrodružný, hravý a srozumitelný dětem 6–10 let, ale ne infantilní. Podporuje zvídavost a pocit vlastního objevování.
-- Jazyky UI: Čeština (primární). Další jazyky zatím neplánované.
+- Jazyky UI: Čeština je výchozí a primární jazyk. Aplikace musí být od začátku architektonicky připravená na lokalizaci do dalších jazyků (zejména angličtiny), i když v1 běží pouze v češtině — viz pravidlo Lokalizace níže.
 
 ## Uživatel
 - Skill level: Začátečník. Nepokládej zbytečné technické dotazy, rozhoduj sám/sama a vysvětluj jednoduše.
@@ -20,7 +20,7 @@
 - Framework: Next.js (App Router) + TypeScript + React
 - UI: Tailwind CSS. Barvy a font zatím nejsou stanovené — viz sekce Grafika a UI.
 - Databáze: Žádná v v1. Obsah pátračky (příběhy, hádanky, úkoly) se ukládá jako JSON/TS soubory verzované v gitu. Databázi zavádět až tehdy, kdy si to vyžádá konkrétní funkce.
-  - **Obsah vždy odděluj od komponent a logiky aplikace** (žádný obsah natvrdo v JSX/komponentách) — usnadní to budoucí přesun z JSON/TS souborů do CMS bez zásahu do kódu komponent.
+  - **Obsah vždy odděluj od komponent a logiky aplikace** (žádný obsah natvrdo v JSX/komponentách) — usnadní to budoucí přesun z JSON/TS souborů do CMS bez zásahu do kódu komponent a zároveň budoucí lokalizaci do dalších jazyků (viz Lokalizace).
 - Auth: Clerk — pouze pro administraci obsahu. Veřejná část webu je bez registrace a přihlašování.
 - Monitoring: Žádný pro v1. Nepřidávat, dokud nebude mít jasný praktický přínos.
 - Hosting: Vercel
@@ -37,6 +37,12 @@
   - Build: `npm run build`
   - Lint: `npm run lint`
   - Instalace balíčků: `npm install <balíček>`
+
+### Lokalizace
+- Čeština je výchozí jazyk aplikace, ale architektura musí od začátku počítat s přidáním dalších jazyků (zejména angličtiny) bez přepisování komponent.
+- **Uživatelské texty (UI popisky, hlášky, obsah pátračky) nikdy nevkládej natvrdo do komponent** — piš je tak, aby šly snadno spravovat a překládat (např. přes i18n knihovnu / překladové soubory oddělené podle jazyka).
+- Konkrétní i18n knihovnu/řešení zvol při zakládání projektu nebo při první potřebě víc jazyků — nejprve krátce vysvětli možnosti a doporučení uživateli (viz sekce Uživatel).
+- Obsah pátračky (příběhy, hádanky, úkoly) drž odděleně od komponent i s ohledem na budoucí překlady, ne jen na budoucí CMS (viz sekce Stack).
 
 ### Git a commity
 - Vždy pracuj na dev branch (nebo feature branch z dev)
@@ -108,6 +114,7 @@ Specifická business logika, výjimky, workaroundy. Doplňuj průběžně.
 - 2026-09-17: Obsah striktně oddělovat od komponent a logiky aplikace — připraví to cestu k budoucímu přechodu na CMS bez zásahu do UI kódu.
 - 2026-09-17: Hosting na Vercelu — přirozená volba pro Next.js, jednoduchý deploy z GitHubu, zdarma pro tento typ provozu.
 - 2026-09-17: Vývoj přímo přes npm, bez Dockeru — pro Next.js/Vercel je Docker nadbytečná komplexita, zvlášť pro začátečníka.
+- 2026-09-18: Čeština je výchozí jazyk, ale architektura musí být od začátku připravená na lokalizaci (zejména do angličtiny) — uživatelské texty nepatří natvrdo do komponent, aby šlo jazyky snadno přidávat a spravovat.
 
 ## Údržba tohoto souboru
 - Aktualizuj po každé strukturální změně, novém pravidlu nebo rozhodnutí
